@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using ProductManagement.Api.Data;
 using ProductManagement.Api.Models;
+using ProductManagement.Api.Services;
+using ProductManagement.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -37,13 +40,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         configureTokenValidation(options.TokenValidationParameters);
     });
 
+builder.Services.AddCors(CorsConfiguration.Configure());
+
+builder.Services.AddScoped<ISeeder, RolesSeeder>();
+builder.Services.AddScoped<ISeeder, UsersSeeder>();
+builder.Services.AddScoped<ISeeder, UserRolesSeeder>();
+builder.Services.AddScoped<ApplicationSeeder>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    builder.Services.AddCors(CorsConfiguration.Configure());
 }
 
 app.UseHttpsRedirection();
@@ -53,10 +64,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-builder.Services.AddScoped<ISeeder, RolesSeeder>();
-builder.Services.AddScoped<ISeeder, UsersSeeder>();
-builder.Services.AddScoped<ApplicationSeeder>();
 
 using (var scope = app.Services.CreateScope())
 {

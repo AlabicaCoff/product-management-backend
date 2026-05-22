@@ -1,9 +1,9 @@
 using ProductManagement.Api.Data;
 using ProductManagement.Api.Models;
-using ProductManagement.Api.Utilities.Interfaces;
+using ProductManagement.Api.Utilities.Seeders.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace ProductManagement.Api.Utilities;
+namespace ProductManagement.Api.Utilities.Seeders;
 public class RolesSeeder : ISeeder
 {
     public async Task SeedAsync(ApplicationDbContext context, IServiceProvider services)

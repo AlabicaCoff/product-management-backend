@@ -1,7 +1,7 @@
 using ProductManagement.Api.Data;
-using ProductManagement.Api.Utilities.Interfaces;
+using ProductManagement.Api.Utilities.Seeders.Interfaces;
 
-namespace ProductManagement.Api.Utilities;
+namespace ProductManagement.Api.Utilities.Seeders;
 public class ApplicationSeeder
 {
     private readonly IEnumerable<ISeeder> _seeders;

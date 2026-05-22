@@ -33,13 +33,13 @@ namespace ProductManagement.Api.Repositories
 
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            var categories = await _dbContext.Categories.AsNoTracking().ToListAsync();
+            var categories = await _dbContext.Categories.ToListAsync();
             return categories;
         }
 
         public async Task<Category?> GetByIdAsync(Guid id)
         {
-            var category = await _dbContext.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
             return category;
         }
 

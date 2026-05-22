@@ -26,6 +26,7 @@ namespace ProductManagement.Api
             builder.Services.AddAutoMapper(mc =>
             {
                 mc.AddProfile<CategoryProfile>();
+                mc.AddProfile<ProductProfile>();
             });
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -62,11 +63,13 @@ namespace ProductManagement.Api
 
             // Repositories
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             // Services
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
             var app = builder.Build();
 

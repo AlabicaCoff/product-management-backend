@@ -10,8 +10,8 @@ namespace ProductManagement.Api.Models
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
 
         // Relationships
         public ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();

@@ -52,12 +52,11 @@ namespace ProductManagement.Api.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(Guid id, [FromBody] CategoryRequestDto categoryRequestDto)
         {
-            var category = await _categoryService.GetByIdAsync(id);
-            if (category == null)
+            var isUpdated = await _categoryService.UpdateAsync(id, categoryRequestDto);
+            if (!isUpdated)
             {
                 return NotFound();
             }
-            await _categoryService.UpdateAsync(id, categoryRequestDto);
             return NoContent();
         }
 
@@ -66,12 +65,11 @@ namespace ProductManagement.Api.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var category = await _categoryService.GetByIdAsync(id);
-            if (category == null)
+            var isDeleted = await _categoryService.DeleteAsync(id);
+            if (!isDeleted)
             {
                 return NotFound();
             }
-            await _categoryService.DeleteAsync(id);
             return NoContent();
         }
     }

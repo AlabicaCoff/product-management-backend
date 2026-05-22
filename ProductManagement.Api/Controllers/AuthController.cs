@@ -22,13 +22,12 @@ namespace ProductManagement.Api.Controllers
         {
             var response = await _authService.LoginAsync(request);
 
-            if (response.IsLoginSuccess)
+            if (!response.IsLoginSuccess)
             {
-                return Ok(response);
+                return Unauthorized(response.FailureMessage);
             }
 
-            ModelState.AddModelError("", response.FailureMessage ?? "Login failed.");
-            return ValidationProblem(ModelState);
+            return Ok(response);
         }
     }
 }

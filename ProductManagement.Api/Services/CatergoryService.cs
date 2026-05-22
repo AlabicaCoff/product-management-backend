@@ -27,9 +27,15 @@ public class CategoryService : ICategoryService
         return categoryResponse;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
+        var category = await _categoryRepository.GetByIdAsync(id);
+        if (category == null)
+        {
+            return false;
+        }
         await _categoryRepository.DeleteAsync(id);
+        return true;
     }
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync()
@@ -43,14 +49,24 @@ public class CategoryService : ICategoryService
     public async Task<CategoryDto?> GetByIdAsync(Guid id)
     {
         var category = await _categoryRepository.GetByIdAsync(id);
-        var categoryDto = _mapper.Map<CategoryDto?>(category);
+        if (category == null)
+        {
+            return null;
+        }
+        var categoryDto = _mapper.Map<CategoryDto>(category);
         return categoryDto;
     }
 
-    public async Task UpdateAsync(Guid id, CategoryRequestDto categoryRequestDto)
+    public async Task<bool> UpdateAsync(Guid id, CategoryRequestDto categoryRequestDto)
     {
-        var category = _mapper.Map<Category>(categoryRequestDto);
+        var category = await _categoryRepository.GetByIdAsync(id);
+        if (category == null)
+        {
+            return false;
+        }
+        var updatedCategory = _mapper.Map(categoryRequestDto, category);
         category.Id = id;
-        await _categoryRepository.UpdateAsync(category);
+        await _categoryRepository.UpdateAsync(updatedCategory);
+        return true;
     }
 }

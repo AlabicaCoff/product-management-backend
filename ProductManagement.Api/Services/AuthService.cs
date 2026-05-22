@@ -34,7 +34,7 @@ public class AuthService : IAuthService
                 var userData = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == identityUser.Id);
                 if (userData is null)
                 {
-                    return new LoginResponseDto()
+                    return new LoginResponseDto
                     {
                         IsLoginSuccess = false,
                         FailureMessage = "Invalid username or password."
@@ -53,13 +53,13 @@ public class AuthService : IAuthService
                 return response;
             }
 
-            return new LoginResponseDto()
+            return new LoginResponseDto
             {
                 IsLoginSuccess = false,
                 FailureMessage = "Invalid username or password."
             };
         }
-        return new LoginResponseDto()
+        return new LoginResponseDto
         {
             IsLoginSuccess = false,
             FailureMessage = "Invalid username or password."

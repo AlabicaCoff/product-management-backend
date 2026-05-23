@@ -41,6 +41,12 @@ namespace ProductManagement.Api.Repositories
                 query = query.Where(p => p.Name.Contains(paginationRequestDto.Search));
             }
 
+            if (paginationRequestDto.Categories.Any())
+            {
+                query = query.Where(p => p.ProductCategories
+                    .Any(pc => paginationRequestDto.Categories.Contains(pc.CategoryId)));
+            }
+
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)paginationRequestDto.PageSize);
 

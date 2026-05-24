@@ -47,13 +47,13 @@ public class ProductService : IProductService
 
     public async Task<ProductPaginationResponseDto> GetAllPaginationAsync(ProductPaginationRequestDto paginationRequestDto)
     {
-        var products = await _productRepository.GetAllPaginationAsync(paginationRequestDto);
+        var (products, totalCount) = await _productRepository.GetAllPaginationAsync(paginationRequestDto);
         var productList = products.ToList();
         var productDtos = _mapper.Map<IEnumerable<ProductDto>>(productList);
         var response = new ProductPaginationResponseDto()
         {
             Products = productDtos.ToList(),
-            TotalCount = productDtos.Count(),
+            TotalCount = totalCount,
             PageNumber = paginationRequestDto.PageNumber,
             PageSize = paginationRequestDto.PageSize,
         };

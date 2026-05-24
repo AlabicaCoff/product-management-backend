@@ -33,7 +33,7 @@ namespace ProductManagement.Api.Repositories
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAllPaginationAsync(ProductPaginationRequestDto paginationRequestDto)
+        public async Task<(IEnumerable<Product> Products, int TotalCount)> GetAllPaginationAsync(ProductPaginationRequestDto paginationRequestDto)
         {
             var query = _dbContext.Products.Include(p => p.ProductCategories).ThenInclude(pc => pc.Category).AsQueryable();
 
@@ -75,16 +75,18 @@ namespace ProductManagement.Api.Repositories
                     ? query.OrderBy(p => p.CreatedDate) 
                     : query.OrderByDescending(p => p.CreatedDate) 
             };
+
+            // Pagination Tie-Breaker
+            query = ((IOrderedQueryable<Product>)query).ThenBy(p => p.Id);
             
             var totalItems = await query.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)paginationRequestDto.PageSize);
 
             var products = await query
                 .Skip((paginationRequestDto.PageNumber - 1) * paginationRequestDto.PageSize)
                 .Take(paginationRequestDto.PageSize)
                 .ToListAsync();
 
-            return products;
+            return (products, totalItems);
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)

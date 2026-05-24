@@ -63,7 +63,8 @@ Product Management Web API is an ASP.NET Core API designed to serve the frontend
 * [ASP.NET Core Web API](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
 * [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
 * [xUnit](https://xunit.net/)
-* SQL Server / PostgreSQL / SQLite
+* [SQL Server](https://www.microsoft.com/en-us/sql-server)
+* [Docker](https://www.docker.com/)
 
 ## Authors
 * [AlabicaCoff](https://github.com/AlabicaCoff)

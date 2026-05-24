@@ -24,7 +24,7 @@ namespace ProductManagement.Api.Controllers
 
             if (!response.IsLoginSuccess)
             {
-                return Unauthorized(response.FailureMessage);
+                return Unauthorized(response);
             }
 
             return Ok(response);

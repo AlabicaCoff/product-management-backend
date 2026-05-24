@@ -3,6 +3,7 @@ using ProductManagement.Api.Models;
 using ProductManagement.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ProductManagement.Api.DTOs;
+using ProductManagement.Api.Enums;
 
 namespace ProductManagement.Api.Repositories
 {
@@ -47,6 +48,34 @@ namespace ProductManagement.Api.Repositories
                     .Any(pc => paginationRequestDto.Categories.Contains(pc.CategoryId)));
             }
 
+            bool isAscending = paginationRequestDto.OrderDirection == ProductOrderDirectionEnum.Ascending;
+            query = paginationRequestDto.OrderBy switch
+            {   
+                ProductOrderByEnum.Name => isAscending 
+                    ? query.OrderBy(p => p.Name) 
+                    : query.OrderByDescending(p => p.Name),
+                    
+                ProductOrderByEnum.Price => isAscending 
+                    ? query.OrderBy(p => p.Price) 
+                    : query.OrderByDescending(p => p.Price),
+                    
+                ProductOrderByEnum.Stock => isAscending 
+                    ? query.OrderBy(p => p.Stock) 
+                    : query.OrderByDescending(p => p.Stock),
+
+                ProductOrderByEnum.CreatedAt => isAscending 
+                    ? query.OrderBy(p => p.CreatedDate) 
+                    : query.OrderByDescending(p => p.CreatedDate),
+                    
+                ProductOrderByEnum.UpdatedAt => isAscending 
+                    ? query.OrderBy(p => p.UpdatedDate) 
+                    : query.OrderByDescending(p => p.UpdatedDate),
+                
+                _ => isAscending 
+                    ? query.OrderBy(p => p.CreatedDate) 
+                    : query.OrderByDescending(p => p.CreatedDate) 
+            };
+            
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)paginationRequestDto.PageSize);
 

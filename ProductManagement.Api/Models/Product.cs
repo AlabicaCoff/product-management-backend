@@ -9,7 +9,7 @@ namespace ProductManagement.Api.Models
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Product name is required.")]
-        [StringLength(200, MinimumLength = 1, ErrorMessage = "Name cannot be empty.")]
+        [StringLength(200, MinimumLength = 1, ErrorMessage = "Product name cannot be empty.")]
         public required string Name { get; set; }
         public string? Description { get; set; }
         

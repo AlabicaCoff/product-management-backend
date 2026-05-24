@@ -53,7 +53,7 @@ namespace ProductManagement.Api
                     configureTokenValidation(options.TokenValidationParameters);
                 });
 
-            builder.Services.AddCors(CorsConfiguration.Configure());
+            builder.Services.AddCors(CorsConfiguration.Configure(builder.Configuration));
 
             // Seeders
             builder.Services.AddScoped<ISeeder, RolesSeeder>();

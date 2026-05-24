@@ -45,12 +45,19 @@ public class ProductService : IProductService
         return true;
     }
 
-    public async Task<IEnumerable<ProductDto>> GetAllPaginationAsync(ProductPaginationRequestDto paginationRequestDto)
+    public async Task<ProductPaginationResponseDto> GetAllPaginationAsync(ProductPaginationRequestDto paginationRequestDto)
     {
         var products = await _productRepository.GetAllPaginationAsync(paginationRequestDto);
         var productList = products.ToList();
         var productDtos = _mapper.Map<IEnumerable<ProductDto>>(productList);
-        return productDtos;
+        var response = new ProductPaginationResponseDto()
+        {
+            Products = productDtos.ToList(),
+            TotalCount = productDtos.Count(),
+            PageNumber = paginationRequestDto.PageNumber,
+            PageSize = paginationRequestDto.PageSize,
+        };
+        return response;
     }
 
     public async Task<bool> UpdateAsync(Guid id, ProductRequestDto productRequestDto)

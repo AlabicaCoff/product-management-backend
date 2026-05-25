@@ -17,12 +17,14 @@ Product Management Web API is an ASP.NET Core API designed to serve the frontend
 | GET | `/api/Product/{id}` | Retrieve details of a specific product. |
 | PUT | `/api/Product/{id}` | Update an existing product. |
 | DELETE | `/api/Product/{id}` | Delete a product. |
+| POST | `/api/Image/upload` | Upload an image for product. |
 
 ## Management Web API Features
 * JWT Bearer Authentication ensures all Product and Category endpoints are secure.
 * Implements basic Layered Architecture (Controller, Service, Repository) and separates DTOs from Entities.
 * Returns appropriate HTTP status codes (200, 201, 400, 401, 404, etc.) for all operations.
 * Server-side validation handles required fields and logic (Category Name is required, Product Name is required, Price > 0, Stock >= 0).
+* Can upload product image to S3-compatible storage such as AWS S3, DO Spaces, etc.
 
 ## Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download)
@@ -51,6 +53,10 @@ Product Management Web API is an ASP.NET Core API designed to serve the frontend
   docker run -p 8081:8080 -d \
   -e 'ConnectionStrings__DefaultConnection=[YOUR_CONNECTION_STRING]' \
   -e 'Cors__AllowedOrigins=[YOUR_FRONTEND_URL]' \
+  -e 'S3__BucketName=[YOUR_S3_BUCKET_NAME]' \
+  -e 'S3__AccessKey=[YOUR_S3_ACCESS_KEY]' \
+  -e 'S3__SecretKey=[YOUR_S3_SECRET_KEY]' \
+  -e 'S3__EndpointUrl=[YOUR_S3_ENDPOINT_URL]' \
   --name product-management-backend product-management-backend
 ```
 * The API will start on `http://localhost:8081/`.
@@ -65,6 +71,7 @@ Product Management Web API is an ASP.NET Core API designed to serve the frontend
 * [xUnit](https://xunit.net/)
 * [SQL Server](https://www.microsoft.com/en-us/sql-server)
 * [Docker](https://www.docker.com/)
+* [AWS S3 SDK](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/csharp_s3_code_examples.html)
 
 ## Authors
 * [AlabicaCoff](https://github.com/AlabicaCoff)

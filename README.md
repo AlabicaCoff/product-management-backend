@@ -52,7 +52,7 @@ Product Management Web API is an ASP.NET Core API designed to serve the frontend
 ```
   docker run -p 8081:8080 -d \
   -e 'ConnectionStrings__DefaultConnection=[YOUR_CONNECTION_STRING]' \
-  -e 'Cors__AllowedOrigins=[YOUR_FRONTEND_URL]' \
+  -e 'Cors__AllowedOrigins=http://localhost:8080' \
   -e 'S3__BucketName=[YOUR_S3_BUCKET_NAME]' \
   -e 'S3__AccessKey=[YOUR_S3_ACCESS_KEY]' \
   -e 'S3__SecretKey=[YOUR_S3_SECRET_KEY]' \

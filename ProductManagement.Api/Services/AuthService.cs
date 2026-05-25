@@ -31,7 +31,7 @@ public class AuthService : IAuthService
             if (checkPasswordResult)
             {
                 // Get the User from Database
-                var userData = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == identityUser.Id);
+                var userData = await _userManager.FindByIdAsync(identityUser.Id);
                 if (userData is null)
                 {
                     return new LoginResponseDto
